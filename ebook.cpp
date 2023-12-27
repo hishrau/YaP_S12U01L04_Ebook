@@ -2,7 +2,7 @@
 #include <iostream>
 #include <map>
 #include <numeric>
-#include <fstream>
+//#include <fstream>
 #include <string>
 
 using namespace std::literals;
@@ -21,12 +21,15 @@ public:
 		}
 	}
 
-	std::ostream& Cheer(std::ostream& output, int reader) {
+	void Cheer(std::ostream& output, int reader) const {
 		output << std::setprecision(6) << GetShare(reader) << std::endl;
-		return output;
 	}
 
-	double GetShare(int reader) {
+private:
+	std::map<int, int> reader_page;
+	std::map<int, int> page_readers;
+
+	double GetShare(int reader) const {
 		if (reader_page.empty() || !(reader_page.count(reader))) {
 			return 0.0;
 		}
@@ -42,10 +45,6 @@ public:
 		double share = 1.0 * num_readers_behind / (reader_page.size() - 1);
 		return share;
 	}
-
-private:
-	std::map<int, int> reader_page;
-	std::map<int, int> page_readers;
 };
 
 //void TestRead() {
@@ -71,7 +70,7 @@ private:
 //}
 
 int main() {
-//	TestRead();
+	//TestRead();
 	Ebook e;
 	int queries_count = 0;
 	std::cin >> queries_count;
